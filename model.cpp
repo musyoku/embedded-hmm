@@ -26,6 +26,10 @@ public:
 			output_sequence.push_back(yt);
 		}
 	}
+	void perform_forward_backward(vector<double> &output_sequence, vector<double> &sampled_state_sequence){
+		assert(output_sequence.size() > 0);
+		assert(sampled_state_sequence.size() == 0);
+	}
 };
 
 BOOST_PYTHON_MODULE(model){
