@@ -1,3 +1,4 @@
+#include "src/hmm.h"
 #include "model.cpp"
 
 int main(int argc, char *argv[]){
@@ -10,14 +11,12 @@ int main(int argc, char *argv[]){
 	wcout.imbue(ctype_default);
 	wcin.imbue(ctype_default);
 
-	PyHMM* model = new PyHMM(10);
+	PyHMM* model = new PyHMM(10, 2.5, 0.4, 2.5);
 	vector<double> state_sequence;
 	vector<double> output_sequence;
-	double eta = 2.5;
-	double sigma = 2.5;
-	double tau = 0.4;
 	int seq_length = 100;
-	model->generate_sequence(state_sequence, output_sequence, seq_length, sigma, eta, tau);
+	model->generate_sequence(state_sequence, output_sequence, seq_length);
+	cout << state_sequence.size() << endl;
 	delete model;
 
 }
