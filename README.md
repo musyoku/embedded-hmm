@@ -26,6 +26,6 @@ python run.py
 
 ### 結果
 
-![image](https://pbs.twimg.com/media/DCmiJmAUwAMjUb4.jpg:original)
+![image](https://pbs.twimg.com/media/DCmiJmAUwAMjUb4.jpg)
 
-![image](https://pbs.twimg.com/media/DCmiK9UUIAAjvOZ.jpg:original)
+![image](https://pbs.twimg.com/media/DCmiK9UUIAAjvOZ.jpg)
