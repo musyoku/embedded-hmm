@@ -60,12 +60,12 @@ public:
 		int seq_length = output_sequence.size();
 		// forward
 		for(int t = 0;t < seq_length;t++){
-			double y = output_sequence[t];
-			double* x = _pool[t];
+			double yt = output_sequence[t];
+			double* xt = _pool[t];
 			double* ut = new double[_pool_capacity];
 			double zut = 0;
 			for(int j = 0;j < _pool_capacity;j++){
-				ut[j] = compute_observation_probability(y, x[j]) / compute_pool_probability(x[j]);
+				ut[j] = compute_observation_probability(yt, xt[j]) / compute_pool_probability(xt[j]);
 				zut += ut[j];
 			}
 			// normalize
@@ -126,8 +126,10 @@ public:
 			double sum = 0;
 			double* xt_1 = _pool[t - 1];
 			double* xt = _pool[t];
+			double* wt_1 = w[t - 1];
+			int st = s[seq_length - t - 1];
 			for(int j = 0;j < _pool_capacity;j++){
-				_sampling_table[j] = w[t - 1][j] * compute_transition_probability(xt[j], xt_1[j]);
+				_sampling_table[j] = wt_1[j] * compute_transition_probability(xt[st], xt_1[j]);
 				sum += _sampling_table[j];
 			}
 			double normalizer = 1.0 / sum;

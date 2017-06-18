@@ -37,8 +37,35 @@ public:
 		assert(sampled_state_sequence.size() == output_sequence.size());
 		_hmm->perform_forward_backward(output_sequence, sampled_state_sequence);
 	}
+	python::list fit(int seq_length, int iteration){
+		vector<double> true_state_sequence;
+		vector<double> sampled_state_sequence;
+		vector<double> output_sequence;
+		generate_sequence(true_state_sequence, output_sequence, seq_length);
+		// initial state
+		for(int t = 0;t < seq_length;t++){
+			sampled_state_sequence.push_back(output_sequence[t]);
+		}
+		for(int itr = 0;itr < iteration;itr++){
+			perform_forward_backward(output_sequence, sampled_state_sequence);
+		}
+		python::list true_states;
+		python::list sampled_states;
+		python::list outputs;
+		for(int t = 0;t < seq_length;t++){
+			true_states.append(true_state_sequence[t]);
+			sampled_states.append(sampled_state_sequence[t]);
+			outputs.append(output_sequence[t]);
+		}
+		python::list result;
+		result.append(outputs);
+		result.append(sampled_states);
+		result.append(true_states);
+		return result;
+	}
 };
 
 BOOST_PYTHON_MODULE(model){
-	python::class_<PyHMM>("hmm", python::init<int, double, double, double>());
+	python::class_<PyHMM>("hmm", python::init<int, double, double, double>())
+	.def("fit", &PyHMM::fit);
 }
