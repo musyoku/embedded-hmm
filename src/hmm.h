@@ -22,6 +22,12 @@ public:
 		_tau = tau;
 		_eta = eta;
 	}
+	~HMM(){
+		delete[] _sampling_table;
+		for(int t = 0;t < _pool.size();t++){
+			delete[] _pool[t];
+		}
+	}
 	void fill_pool(vector<double> &prev_state_sequence){
 		int seq_length = prev_state_sequence.size();
 		for(int t = 0;t < seq_length;t++){
@@ -116,7 +122,7 @@ public:
 			}
 		}
 		assert(s.size() == 1);
-		for(int t = seq_length - 2;t >= 1;t--){
+		for(int t = seq_length - 1;t >= 1;t--){
 			double sum = 0;
 			double* xt_1 = _pool[t - 1];
 			double* xt = _pool[t];
@@ -134,14 +140,21 @@ public:
 					break;
 				}
 			}
-			assert(s.size() == seq_length - t);
+			assert(s.size() == seq_length - t + 1);
 		}
 
 		std::reverse(s.begin(), s.end());
 		for(int t = 0;t < seq_length;t++){
 			int index = s[t];
+			assert(index < _pool_capacity);
 			double state = _pool[t][index];
 			sampled_state_sequence[t] = state;
 		}
+
+		for(int t = 0;t < seq_length;t++){
+			delete[] u[t];
+			delete[] w[t];
+		}
+
 	}
 };

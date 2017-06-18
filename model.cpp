@@ -20,6 +20,9 @@ public:
 		wcin.imbue(ctype_default);
 		_hmm = new HMM(pool_capacity, sigma, tau, eta);
 	}
+	~PyHMM(){
+		delete _hmm;
+	}
 	void generate_sequence(vector<double> &state_sequence, vector<double> &output_sequence, int seq_length){
 		double xt = 0, yt;
 		for(int t = 0;t < seq_length;t++){
