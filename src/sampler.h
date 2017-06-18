@@ -11,4 +11,8 @@ namespace sampler{
 		normal_distribution<double> rand(mean, stddev);
 		return rand(mt);
 	}
+	double uniform(double min = 0, double max = 0){
+		uniform_real_distribution<double> rand(min, max);
+		return rand(mt);
+	}
 } // namespace sampler

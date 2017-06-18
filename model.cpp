@@ -31,7 +31,8 @@ public:
 	}
 	void perform_forward_backward(vector<double> &output_sequence, vector<double> &sampled_state_sequence){
 		assert(output_sequence.size() > 0);
-		assert(sampled_state_sequence.size() == 0);
+		assert(sampled_state_sequence.size() == output_sequence.size());
+		_hmm->perform_forward_backward(output_sequence, sampled_state_sequence);
 	}
 };
 
